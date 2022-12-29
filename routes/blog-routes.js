@@ -13,10 +13,10 @@ const upload = multer({ dest: 'uploads/' })
 const blogRouter = express.Router();
 
 blogRouter.get("/",verifyToken, getAllBlogs);
-blogRouter.post("/add",upload.single('image'), addBlog);
-blogRouter.put("/update/:id", updateBlog);
-blogRouter.get("/:id", getById);
-blogRouter.delete("/:id", deleteBlog);
+blogRouter.post("/add",upload.single('image'),verifyToken, addBlog);
+blogRouter.put("/update/:id",verifyToken, updateBlog);
+blogRouter.get("/:id", verifyToken,getById);
+blogRouter.delete("/:id",verifyToken, deleteBlog);
 blogRouter.get("/user/:id",verifyToken, getByUserId);
 
 module.exports = blogRouter;

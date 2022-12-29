@@ -21,6 +21,11 @@ const userSchema = new Schema({
     type:mongoose.Types.ObjectId,
     ref:"Blog",
     required: true,
+  }],
+  comments:[{
+    type:mongoose.Types.ObjectId,
+    ref:"Comment",
+    required: true,
   }]
 });
 
