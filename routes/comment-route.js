@@ -7,7 +7,7 @@ commentRouter.get("/:id",verifyToken,getByBlogId);
 commentRouter.post("/add",verifyToken,addComment);
 commentRouter.get("/user/:id",verifyToken,getCommentsByUserId);
 commentRouter.put("/update/:id",verifyToken,updateComment);
-// commentRouter.delete("/:id",verifyToken,deleteComment);
+commentRouter.delete("/:id",verifyToken,deleteComment);
 
 
 module.exports=commentRouter;

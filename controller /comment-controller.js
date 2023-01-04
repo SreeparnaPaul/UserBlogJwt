@@ -86,29 +86,27 @@ const getByBlogId = async (req, res, next) => {
     }
     return res.status(200).json({ updatedComment });
   };
-  // const deleteComment = async (req, res, next) => {
-  //   const id = req.params.id;
+  const deleteComment = async (req, res, next) => {
+    const id = req.params.id;
   
-  //   let blogComment;
-  //   let userComment;
-  //   try {
-  //     userComment = await Comment.findByIdAndRemove(id).populate("user");
-  //     await userComment.user.comments.pull(userComment);
-  //     await userComment.user.save();
-  //     blogComment = await Comment.findByIdAndRemove(id).populate("blog");
-  //     await blogComment.blog.comments.pull(blogComment);
-  //     await blogComment.blog.save();
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   if (!userComment || !blogComment) {
-  //     return res.status(500).json({ message: "Unable To Delete" });
-  //   }
-  //   return res.status(200).json({ message: "Successfully Delete" });
-  // };
+    let userComment;
+    try {
+      userComment = await Comment.findByIdAndRemove(id).populate("blog").populate("user");
+      await userComment.user.comments.pull(userComment);
+      await userComment.user.save();
+      await userComment.blog.comments.pull(userComment);
+      await userComment.blog.save();
+    } catch (err) {
+      console.log(err);
+    }
+    if (!userComment ) {
+      return res.status(500).json({ message: "Unable To Delete" });
+    }
+    return res.status(200).json({ message: "Successfully Delete" });
+  };
   
 exports.getByBlogId=getByBlogId;
 exports.addComment=addComment;
 exports.getCommentsByUserId=getCommentsByUserId;
 exports.updateComment=updateComment;
-// exports.deleteComment=deleteComment;
+ exports.deleteComment=deleteComment;
