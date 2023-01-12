@@ -16,9 +16,10 @@ const getAllBlogs = async (req, res, next) => {
 };
 
 const addBlog = async (req, res, next) => {
-  const { title, description, image, user } = req.body;
+  const { title, description, user } = req.body;
 
   let existingUser;
+  let image="/uploads/"+req.file.filename;
   try {
     existingUser = await User.findById(user);
   } catch (err) {
@@ -52,10 +53,12 @@ const updateBlog = async (req, res, next) => {
   const { title, description } = req.body;
   const blogId = req.params.id;
   let blog;
+  let image="/uploads/"+req.file.filename;
   try {
     blog = await Blog.findByIdAndUpdate(blogId, {
       title,
       description,
+      image
     });
   } catch (err) {
     return console.log(err);
